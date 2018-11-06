@@ -1,0 +1,28 @@
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+
+    <type name="Magento\Framework\Console\CommandListInterface">
+        <arguments>
+            <argument name="commands" xsi:type="array">
+                <item name="charzam_plugins_installed" xsi:type="object">CharZam\Plugins\Command\Installed</item>
+                <item name="charzam_plugins_run" xsi:type="object">CharZam\Plugins\Command\Run</item>
+            </argument>
+        </arguments>
+    </type>
+
+    <preference for="CharZam\Plugins\Api\Class1Interface" type="CharZam\Plugins\Model\Class1"/>
+
+    <type name="CharZam\Plugins\Model\Class1">
+        <plugin name="charzam_plugins_plugin_model_class1"
+                type="CharZam\Plugins\Plugin\Model\Class1"
+                sortOrder="10"
+                disabled="false"/>
+    </type>
+
+    <type name="CharZam\Plugins\Model\Class1">
+        <plugin name="charzam_plugins_plugin_model_class1again"
+                type="CharZam\Plugins\Plugin\Model\Class1Again"
+                sortOrder="20"
+                disabled="false"/>
+    </type>
+
+</config>
