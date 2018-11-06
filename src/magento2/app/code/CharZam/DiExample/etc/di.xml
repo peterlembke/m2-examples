@@ -1,0 +1,69 @@
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+
+    <type name="Magento\Framework\Console\CommandListInterface">
+        <arguments>
+            <argument name="commands" xsi:type="array">
+                <item name="charzam_command_installed" xsi:type="object">CharZam\DiExample\Command\Installed</item>
+                <item name="charzam_command_class1_test" xsi:type="object">CharZam\DiExample\Command\Class1Test</item>
+                <item name="charzam_command_class2_test" xsi:type="object">CharZam\DiExample\Command\Class2Test</item>
+                <item name="charzam_command_class3_test" xsi:type="object">CharZam\DiExample\Command\Class3Test</item>
+                <item name="charzam_command_class4_test" xsi:type="object">CharZam\DiExample\Command\Class4Test</item>
+            </argument>
+        </arguments>
+    </type>
+
+    <preference for="CharZam\DiExample\Api\MyObjectInterface" type="CharZam\DiExample\Model\MyObject1"/>
+
+    <type name="CharZam\DiExample\Model\MyObject1">
+        <arguments>
+            <argument name="startValue" xsi:type="number">8</argument>
+        </arguments>
+    </type>
+
+    <type name="CharZam\DiExample\Model\MyObject2">
+        <arguments>
+            <argument name="startValue" xsi:type="number">16</argument>
+        </arguments>
+    </type>
+
+    <type name="CharZam\DiExample\Model\MyObject3">
+        <arguments>
+            <argument name="startValue" xsi:type="number">32</argument>
+        </arguments>
+    </type>
+
+    <preference for="CharZam\DiExample\Api\Class1Interface" type="CharZam\DiExample\Model\Class1"/>
+
+    <type name="CharZam\DiExample\Model\Class1">
+        <arguments>
+            <argument name="foo" xsi:type="string">New DI foo 1</argument>
+            <argument name="myObject" xsi:type="object">\CharZam\DiExample\Model\MyObject1</argument>
+        </arguments>
+    </type>
+    <type name="CharZam\DiExample\Model\Class2">
+        <arguments>
+            <argument name="foo" xsi:type="string">New DI foo 2</argument>
+            <argument name="myObject" xsi:type="object">\CharZam\DiExample\Model\MyObject2</argument>
+        </arguments>
+    </type>
+    <type name="CharZam\DiExample\Model\Class3">
+        <arguments>
+            <argument name="foo" xsi:type="string">New DI foo 3</argument>
+            <argument name="myObject" xsi:type="object">\CharZam\DiExample\Model\MyObject3</argument>
+        </arguments>
+    </type>
+
+    <virtualType name="CharZam\DiExample\Model\MyObject4" type="CharZam\DiExample\Model\MyObject3">
+        <arguments>
+            <argument name="startValue" xsi:type="number">10000</argument>
+        </arguments>
+    </virtualType>
+
+    <type name="CharZam\DiExample\Model\Class4">
+        <arguments>
+            <argument name="foo" xsi:type="string">New DI foo 4</argument>
+            <argument name="myObject" xsi:type="object">\CharZam\DiExample\Model\MyObject4</argument>
+        </arguments>
+    </type>
+
+</config>
