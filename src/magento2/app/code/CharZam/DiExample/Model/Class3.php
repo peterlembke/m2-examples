@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * Improove_Module
  *
@@ -29,7 +30,8 @@ namespace CharZam\DiExample\Model;
 
 class Class3 extends Class1
 {
-    public function myPublicFunction($foo = '') {
+    public function myPublicFunction($foo = ''): array
+    {
         $foo = ucwords($foo);
         return parent::myPublicFunction($foo);
     }

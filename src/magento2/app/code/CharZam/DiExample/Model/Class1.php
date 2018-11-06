@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * Improove_Module
  *
@@ -42,7 +43,8 @@ class Class1 implements Class1Interface
         $this->myObject = $myObject;
     }
 
-    public function myPublicFunction($foo = '') {
+    public function myPublicFunction($foo = ''): array
+    {
 
         $className = get_class($this);
 
@@ -53,7 +55,7 @@ class Class1 implements Class1Interface
         );
     }
 
-    public function myPublic2($myVar = 0)
+    public function myPublic2($myVar = 0): array
     {
         $result = $this->myObject->getStartValue($myVar);
 

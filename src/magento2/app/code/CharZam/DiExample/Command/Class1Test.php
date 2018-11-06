@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * Improove_Module
  *
@@ -56,7 +57,7 @@ class Class1Test extends Command
 
     protected function configure()
     {
-        $this->setName('charzam:class1test');
+        $this->setName('charzam:di:class1test');
         $this->setDescription('Test dependency injection');
         parent::configure();
     }

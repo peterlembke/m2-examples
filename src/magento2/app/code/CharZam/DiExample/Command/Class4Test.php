@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * Improove_Module
  *
@@ -57,7 +58,7 @@ class Class4Test extends Command
 
     protected function configure()
     {
-        $this->setName('charzam:class4test');
+        $this->setName('charzam:di:class4test');
         $this->setDescription('Test argument replacement');
         parent::configure();
     }

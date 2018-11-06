@@ -3,11 +3,11 @@
     <type name="Magento\Framework\Console\CommandListInterface">
         <arguments>
             <argument name="commands" xsi:type="array">
-                <item name="charzam_command_installed" xsi:type="object">CharZam\DiExample\Command\Installed</item>
-                <item name="charzam_command_class1_test" xsi:type="object">CharZam\DiExample\Command\Class1Test</item>
-                <item name="charzam_command_class2_test" xsi:type="object">CharZam\DiExample\Command\Class2Test</item>
-                <item name="charzam_command_class3_test" xsi:type="object">CharZam\DiExample\Command\Class3Test</item>
-                <item name="charzam_command_class4_test" xsi:type="object">CharZam\DiExample\Command\Class4Test</item>
+                <item name="charzam_diexample_installed" xsi:type="object">CharZam\DiExample\Command\Installed</item>
+                <item name="charzam_diexample_class1test" xsi:type="object">CharZam\DiExample\Command\Class1Test</item>
+                <item name="charzam_diexample_class2test" xsi:type="object">CharZam\DiExample\Command\Class2Test</item>
+                <item name="charzam_diexample_class3test" xsi:type="object">CharZam\DiExample\Command\Class3Test</item>
+                <item name="charzam_diexample_class4test" xsi:type="object">CharZam\DiExample\Command\Class4Test</item>
             </argument>
         </arguments>
     </type>

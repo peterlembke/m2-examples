@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * Improove_Module
  *
@@ -43,7 +44,7 @@ class Installed extends Command
 
     protected function configure()
     {
-        $this->setName('charzam:installed');
+        $this->setName('charzam:di:installed');
         $this->setDescription('Test if the module are installed');
         parent::configure();
     }

@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * Improove_Module
  *
@@ -41,7 +42,8 @@ class MyObject1 implements MyObjectInterface
         $this->startValue = $startValue;
     }
 
-    public function getStartValue($addThis = 0) {
+    public function getStartValue($addThis = 0): int
+    {
         return $this->startValue + $addThis;
     }
 
