@@ -96,3 +96,11 @@ CallingCharZam\Plugins\Plugin\Model\Class1::aroundMyPublicFunction -- after IN=1
 Calling CharZam\Plugins\Plugin\Model\Class1::afterMyPublicFunction IN=17
 function_foo="18"; class_foo="class1 foo"; class_name="CharZam\Plugins\Model\Class1\Interceptor"; 
 ```
+
+How does it work?
+-----------------
+Check in generated/code/CharZam/Plugins/Model/Class1/Interceptor.php
+It is this class that are called and it will reroute the request to the right plugin function.
+
+The file are automatically created if you run in developer mode.
+In production mode it is created when you run ```magento setup:di:compile```
