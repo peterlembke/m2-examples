@@ -6,11 +6,13 @@ That is exactly what a proxy does.
 
 In this example I inject three classes. Class1 initialize quickly, Class2 takes 1 second, Class3 takes 2 seconds.
 And depending on what command you run it will use one function from one of the classes. It is a waste of time to initialize all the classes.
+
 That is why they are using a proxy instead.
 
 Where do I insert a proxy?
 --------------------------
 In di.xml you can use normal class arguments to insert the class you want. If you add \Proxy to the end then a proxy class will be automatically created.
+
 ```
     <type name="CharZam\UseProxy\Command\Class1Test">
         <arguments>
@@ -20,28 +22,34 @@ In di.xml you can use normal class arguments to insert the class you want. If yo
         </arguments>
     </type>
 ```
+
 You will find the proxy class in 
 
 generated/code/CharZam/UseProxy/Model/Class1/Proxy.php
+
 It is this class that are called when you use a function in the class. Now it will instantiate the class and pass the call to the function you want.
 
 The file are automatically created if you run Magento in developer mode.
-In production mode it is created when you run ```magento setup:di:compile```
+In production mode it is created when you run 
+```magento setup:di:compile```
 
 Run the test
 ------------
 There are three commands you can run.
 
 ```magento charzam:useproxy:class1test```
+
 Result:
 function_foo=""; class_foo="class1 foo"; class_name="CharZam\UseProxy\Model\Class1"; time="0.00025510787963867";
 
 ```magento charzam:useproxy:class2test```
+
 Result:
 function_foo=""; class_foo="class2 foo"; class_name="CharZam\UseProxy\Model\Class2"; time="1.0048677921295";
 Here you see that the 1 second slow initialization process for Class2 shows when we use the function.
 
 ```magento charzam:useproxy:class3test```
+
 Result:
 function_foo=""; class_foo="class3 foo"; class_name="CharZam\UseProxy\Model\Class3"; time="2.0040881633759";
 Here you see that the 2 second slow initialization process for Class3 shows when we use the function.
