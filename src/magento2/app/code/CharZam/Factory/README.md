@@ -47,6 +47,12 @@ customer factory="Magento\Customer\Api\Data\CustomerInterfaceFactory";
 customer object="Magento\Customer\Model\Data\Customer"; 
 class1 object="CharZam\Factory\Model\Class1";
 ```
+Where is the class?
+-------------------
+There is no CustomerInterfaceFactory class. The factory class are created in
+```
+generated\code\Magento\Customer\Api\Data\CustomerInterfaceFactory
+``` 
 
 Sharing = false
 ---------------
