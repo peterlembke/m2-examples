@@ -27,6 +27,11 @@ With a factory object you can create new empty objects of a specific type.
 For example when you want to create new customers or products.
 This example is also about singleton (shared objects).
 
+Events
+------
+You can dispatch events and attach any data. In your observer you get READ ONLY data that you can act on.
+If you need to send data back, then use a plugin instead.
+
 # Resources
 Resources how you can study Magento 2 more in depth.
 
