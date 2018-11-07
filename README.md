@@ -21,6 +21,12 @@ No need to change any code at all, just configure in di.xml that you want this o
 
 https://github.com/peterlembke/m2-examples/tree/master/src/magento2/app/code/CharZam/UseProxy
 
+Factory
+-------
+With a factory object you can create new empty objects of a specific type.
+For example when you want to create new customers or products.
+This example is also about singleton (shared objects).
+
 # Resources
 Resources how you can study Magento 2 more in depth.
 
