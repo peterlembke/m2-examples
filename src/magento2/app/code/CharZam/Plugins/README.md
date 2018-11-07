@@ -6,10 +6,11 @@ You can also define an AROUND call so you can have total control over a function
 Plugins, can and can not
 ------------------------
 You can only use plugins on public functions that are NOT declared final or static.
+You can use plugins on Interface classes.
 
 With $subject you get access to the class object. You can then call public functions, but you do NOT have access to protected or private functions.
 
-DO NOT use plugins to modify classes in the same module as we have done here.
+DO NOT use plugins to modify classes in the same module as we have done here. This module is just for education use only.
 
 Sort order
 ----------
@@ -27,6 +28,8 @@ The plugin with the LOWEST sortOrder will start running.
 - after (sortOrder 20)
 - around - second half (sortOrder 10)
 - after (sortOrder 10)
+
+If we were to throw in another plugin with sortOrder 5 then I bet you can figure out in what order each plugin is called.
 
 before
 ------
@@ -110,3 +113,38 @@ It is this class that are called and it will reroute the request to the right pl
 
 The file are automatically created if you run in developer mode.
 In production mode it is created when you run ```magento setup:di:compile```
+
+Define the plugins in di.xml
+----------------------------
+Check the di.xml file in this module and you see how the plugins are defined.
+
+```
+    <preference for="CharZam\Plugins\Api\Class1Interface" type="CharZam\Plugins\Model\Class1"/>
+
+    <type name="CharZam\Plugins\Model\Class1">
+        <plugin name="charzam_plugins_plugin_model_class1"
+                type="CharZam\Plugins\Plugin\Model\Class1"
+                sortOrder="10"
+                disabled="false"/>
+        <plugin name="charzam_plugins_plugin_model_class1again"
+                type="CharZam\Plugins\Plugin\Model\Class1Again"
+                sortOrder="20"
+                disabled="false"/>
+    </type>
+
+    <type name="CharZam\Plugins\Api\Class1Interface">
+        <plugin name="charzam_plugins_plugin_model_class1Interface"
+                type="CharZam\Plugins\Plugin\Model\Class1Again"
+                sortOrder="5"
+                disabled="false"/>
+    </type>
+```
+
+You can put plugins on classes or interfaces.
+
+In this example we have three plugins on the same class "Class1".
+
+Why a plugin on the interface class?
+------------------------------------
+If the preference in di.xml are changed to another class than Class1 then the two plugins that go directly to Class1 will no longer work.
+The plugin that point to the Interface will still work. 

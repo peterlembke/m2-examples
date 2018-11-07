@@ -16,12 +16,16 @@
                 type="CharZam\Plugins\Plugin\Model\Class1"
                 sortOrder="10"
                 disabled="false"/>
-    </type>
-
-    <type name="CharZam\Plugins\Model\Class1">
         <plugin name="charzam_plugins_plugin_model_class1again"
                 type="CharZam\Plugins\Plugin\Model\Class1Again"
                 sortOrder="20"
+                disabled="false"/>
+    </type>
+
+    <type name="CharZam\Plugins\Api\Class1Interface">
+        <plugin name="charzam_plugins_plugin_model_class1Interface"
+                type="CharZam\Plugins\Plugin\Model\Class1Again"
+                sortOrder="5"
                 disabled="false"/>
     </type>
 
