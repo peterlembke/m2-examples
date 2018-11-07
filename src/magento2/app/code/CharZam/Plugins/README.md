@@ -72,7 +72,8 @@ The result would be:
    CallingCharZam\Plugins\Plugin\Model\Class1::aroundMyPublicFunction -- before IN=11
    CallingCharZam\Plugins\Plugin\Model\Class1::aroundMyPublicFunction -- after IN=12
    Calling CharZam\Plugins\Plugin\Model\Class1::afterMyPublicFunction IN=13
-   function_foo="14"; class_foo=""; class_name=""; ```
+   function_foo="14"; class_foo=""; class_name=""; 
+```
 This might very well be the result you want. Compare this result with the one below.
 
 When you call $procede you must also add all variables in the right order.
@@ -103,4 +104,5 @@ Check in generated/code/CharZam/Plugins/Model/Class1/Interceptor.php
 It is this class that are called and it will reroute the request to the right plugin function.
 
 The file are automatically created if you run in developer mode.
-In production mode it is created when you run ```magento setup:di:compile```
+In production mode it is created when you run 
+```magento setup:di:compile```
