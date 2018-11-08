@@ -36,6 +36,12 @@ If you need to send data back, then use a plugin instead.
 
 https://github.com/peterlembke/m2-examples/tree/master/src/magento2/app/code/CharZam/Events
 
+Crontab
+-------
+With cron you can schedule tasks to run regularily. In this module you see how to set up jobs, deparate business logic and test the job. The documentation is a bit more extensive in this module.
+
+https://github.com/peterlembke/m2-examples/tree/master/src/magento2/app/code/CharZam/Crontab
+
 # Resources
 Resources how you can study Magento 2 more in depth.
 
