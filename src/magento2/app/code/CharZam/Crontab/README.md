@@ -127,8 +127,11 @@ See your crontab with
 ```
 crontab -e
 ```
-If there is nothing in there you can exit (Shift : then write q and press enter) and run
+If there is nothing in there you can exit (Shift : then write q and press enter)
 
+More here: https://www.tutorialspoint.com/unix/unix-vi-editor.htm
+
+This command will set up crontab for you
 ```
 magento cron:install
 ```
