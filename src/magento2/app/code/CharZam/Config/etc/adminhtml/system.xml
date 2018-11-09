@@ -1,0 +1,76 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * CharZam_Config
+ *
+ * NOTICE OF LICENSE
+ *
+ * Copyright (C) 2018  Improove
+ *
+ * CharZam_Config is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ *
+ * CharZam_Config is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with CharZam_Config.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ * @category    CharZam
+ * @package     CharZam_Config
+ * @copyright   Copyright (C) 2018 Improove (http://www.improove.se/)
+ * @license     http://www.gnu.org/licenses/agpl-3.0.html
+ * @author      Peter Lembke <peter.lembke@improove.se>
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <tab id="improove" translate="label" sortOrder="400">
+            <label>Improove</label>
+        </tab>
+        <section id="improove_config" translate="label" type="text" sortOrder="400" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>Config example</label>
+            <tab>improove</tab>
+            <resource>Improove_Config::system_config</resource>
+
+            <group id="general" translate="label" type="text" sortOrder="5" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>General</label>
+                <field id="module_version" translate="label comment" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Module version</label>
+                    <frontend_model>Improove\Config\Block\Version</frontend_model>
+                </field>
+                <field id="module_documentation" translate="label comment" type="select" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Module documentation</label>
+                    <frontend_model>Improove\Config\Block\Documentation</frontend_model>
+                </field>
+                <field id="module_repository" translate="label comment" type="select" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Module repository</label>
+                    <frontend_model>Improove\Config\Block\Repository</frontend_model>
+                </field>
+            </group>
+
+            <group id="settings" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="0">
+                <label>Settings</label>
+                <comment>Settings for this module</comment>
+
+                <field id="enabled" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Enable</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+
+                <field id="category_id" translate="label comment" type="text" sortOrder="20" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <depends>
+                        <field id="*/*/enabled">1</field>
+                    </depends>
+                    <label>Category ID</label>
+                    <comment>The category ID you want</comment>
+                </field>
+            </group>
+
+        </section>
+    </system>
+</config>

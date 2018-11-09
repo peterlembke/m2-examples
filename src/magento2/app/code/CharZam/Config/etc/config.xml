@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * CharZam_Config
+ *
+ * NOTICE OF LICENSE
+ *
+ * Copyright (C) 2018  Improove
+ *
+ * CharZam_Config is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ *
+ * CharZam_Config is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with CharZam_Config.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ * @category    CharZam
+ * @package     CharZam_Config
+ * @copyright   Copyright (C) 2018 Improove (http://www.improove.se/)
+ * @license     http://www.gnu.org/licenses/agpl-3.0.html
+ * @author      Peter Lembke <peter.lembke@improove.se>
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <improove_config>
+            <general>
+                <module_documentation>https://improove.atlassian.net/wiki/spaces/MF/pages/554631169/Improove+CategoryNewsFromDate</module_documentation>
+                <module_repository>https://github.com/improove/magento2-module-improove-category-news-from-date</module_repository>
+            </general>
+            <settings>
+                <enabled>0</enabled>
+            </settings>
+        </improove_config>
+    </default>
+</config>

@@ -1,0 +1,12 @@
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+
+    <type name="Magento\Framework\Console\CommandListInterface">
+        <arguments>
+            <argument name="commands" xsi:type="array">
+                <item name="charzam_config_installed" xsi:type="object">CharZam\Config\Command\Installed</item>
+                <item name="charzam_config_run" xsi:type="object">CharZam\Config\Command\Run</item>
+            </argument>
+        </arguments>
+    </type>
+
+</config>
