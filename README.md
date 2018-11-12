@@ -42,6 +42,12 @@ With cron you can schedule tasks to run regularily. In this module you see how t
 
 https://github.com/peterlembke/m2-examples/tree/master/src/magento2/app/code/CharZam/Crontab
 
+Config
+------
+You can create your own Admin config. See this module how it is done.
+
+https://github.com/peterlembke/m2-examples/tree/master/src/magento2/app/code/CharZam/Config
+
 # Resources
 Resources how you can study Magento 2 more in depth.
 
