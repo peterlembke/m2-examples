@@ -26,12 +26,12 @@
  * @author      Peter Lembke <peter.lembke@improove.se>
  */
 
-namespace Improove\Config\Block;
+namespace CharZam\Config\Block;
 
 class Version extends \Magento\Config\Block\System\Config\Form\Field
 {
 
-    const MODULE_NAME = 'Improove_Config';
+    const MODULE_NAME = 'CharZam_Config';
 
     protected $_moduleList;
 

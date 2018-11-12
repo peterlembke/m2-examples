@@ -26,7 +26,7 @@
  * @author      Peter Lembke <peter.lembke@improove.se>
  */
 
-namespace Improove\Config\Block;
+namespace CharZam\Config\Block;
 
 class Documentation extends \Magento\Config\Block\System\Config\Form\Field
 {

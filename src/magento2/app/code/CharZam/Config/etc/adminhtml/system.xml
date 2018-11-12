@@ -29,45 +29,131 @@
 -->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
     <system>
-        <tab id="improove" translate="label" sortOrder="400">
-            <label>Improove</label>
+        <tab id="CharZam" translate="label" sortOrder="400">
+            <label>CharZam</label>
         </tab>
-        <section id="improove_config" translate="label" type="text" sortOrder="400" showInDefault="1" showInWebsite="1" showInStore="1">
+        <section id="charzam_config" translate="label" type="text" sortOrder="400" showInDefault="1" showInWebsite="1" showInStore="1">
             <label>Config example</label>
-            <tab>improove</tab>
-            <resource>Improove_Config::system_config</resource>
+            <tab>CharZam</tab>
+            <resource>CharZam_Config::system_config</resource>
 
             <group id="general" translate="label" type="text" sortOrder="5" showInDefault="1" showInWebsite="1" showInStore="1">
                 <label>General</label>
                 <field id="module_version" translate="label comment" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Module version</label>
-                    <frontend_model>Improove\Config\Block\Version</frontend_model>
+                    <frontend_model>CharZam\Config\Block\Version</frontend_model>
                 </field>
                 <field id="module_documentation" translate="label comment" type="select" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Module documentation</label>
-                    <frontend_model>Improove\Config\Block\Documentation</frontend_model>
+                    <frontend_model>CharZam\Config\Block\Documentation</frontend_model>
                 </field>
                 <field id="module_repository" translate="label comment" type="select" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Module repository</label>
-                    <frontend_model>Improove\Config\Block\Repository</frontend_model>
+                    <frontend_model>CharZam\Config\Block\Repository</frontend_model>
                 </field>
             </group>
 
             <group id="settings" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="0">
-                <label>Settings</label>
-                <comment>Settings for this module</comment>
+                <label>A group with settings</label>
+                <comment>This is a group with settings. You group the settings as you see fit</comment>
 
-                <field id="enabled" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="0" showInStore="0">
+                <field id="enabled" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="0">
                     <label>Enable</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>Type: select. Shows a select type with a yes/no data source.</comment>
                 </field>
 
-                <field id="category_id" translate="label comment" type="text" sortOrder="20" showInDefault="1" showInWebsite="0" showInStore="0">
+                <field id="company_name" translate="label comment" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="0">
                     <depends>
                         <field id="*/*/enabled">1</field>
                     </depends>
-                    <label>Category ID</label>
-                    <comment>The category ID you want</comment>
+                    <label>Company name</label>
+                    <comment>Text input that are required. Validator checks that this field is not empty</comment>
+                    <validate>validate-no-empty</validate>
+                </field>
+
+                <field id="textarea_example" translate="label" type="textarea" sortOrder="25" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Textarea example</label>
+                </field>
+
+                <field id="password" translate="label comment" type="password" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <depends>
+                        <field id="*/*/enabled">1</field>
+                    </depends>
+                    <label>Password</label>
+                    <comment>Text input. Type: password. Text will be obscured when you type it but it will be stored in plain text</comment>
+                </field>
+
+                <field id="secret_key" translate="label" type="obscure" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Secret Access Key</label>
+                    <backend_model>Magento\Config\Model\Config\Backend\Encrypted</backend_model>
+                    <!--<config_path>payment/amazon_payment/secret_key</config_path>-->
+                    <comment>Text input. Type: obscure. Text will be obscured when you type it and will be stored encrypted in the database.</comment>
+                </field>
+
+                <field id="logo" translate="label" type="image" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Image example (with a comment)</label>
+                    <backend_model>Magento\Config\Model\Config\Backend\Image</backend_model>
+                    <upload_dir config="system/filesystem/media" scope_info="1">logo</upload_dir>
+                    <base_url type="media" scope_info="1">logo</base_url>
+                    <comment><![CDATA[Allowed file types: jpeg, gif, png.]]></comment>
+                </field>
+
+                <field id="button" type="button" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Demo button</label>
+                    <frontend_model>CharZam\Config\Block\Adminhtml\Config\Button</frontend_model>
+                    <comment>This is how a button will be shown</comment>
+                </field>
+
+                <field id="custom_html" type="label" sortOrder="70" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Custom HTML</label>
+                    <frontend_model>CharZam\Config\Block\Adminhtml\Config\Demo</frontend_model>
+                    <comment>Show a custom template</comment>
+                </field>
+
+                <field id="custom_source" translate="label" type="select" sortOrder="80" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Custom source model</label>
+                    <source_model>CharZam\Config\Model\Source\Custom</source_model>
+                    <comment>Type: select. Your own data source.</comment>
+                </field>
+
+                <field id="option_1" translate="label" type="select" sortOrder="90" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Option 1 - date short</label>
+                    <source_model>Magento\Config\Model\Config\Source\Date\Short</source_model>
+                    <comment>Magento have a lot of data sources you can use</comment>
+                    <depends>
+                        <field id="*/*/custom_source">1</field>
+                    </depends>
+                </field>
+
+                <field id="option_2" translate="label" type="select" sortOrder="100" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Option 2 - image adapter</label>
+                    <source_model>Magento\Config\Model\Config\Source\Image\Adapter</source_model>
+                    <comment>Magento have a lot of data sources you can use</comment>
+                    <depends>
+                        <field id="*/*/custom_source">2</field>
+                    </depends>
+                </field>
+
+                <field id="option_3" translate="label" type="select" sortOrder="110" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Option 3 - weekdays</label>
+                    <source_model>Magento\Config\Model\Config\Source\Locale\Weekdays</source_model>
+                    <comment>Magento have a lot of data sources you can use</comment>
+                    <depends>
+                        <field id="*/*/custom_source">3</field>
+                    </depends>
+                </field>
+
+            </group>
+
+            <group id="more_settings" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="0">
+                <label>Another group</label>
+                <comment>More settings here</comment>
+
+                <field id="enabled" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Enable</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>Type: select. Shows a select type with a yes/no data source.</comment>
                 </field>
             </group>
 
