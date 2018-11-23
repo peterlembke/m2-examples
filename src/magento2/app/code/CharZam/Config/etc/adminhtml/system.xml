@@ -63,17 +63,18 @@
                     <comment>Type: select. Shows a select type with a yes/no data source.</comment>
                 </field>
 
-                <field id="company_name" translate="label comment" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="0">
+                <field id="email_address" translate="label comment" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="0">
                     <depends>
                         <field id="*/*/enabled">1</field>
                     </depends>
-                    <label>Company name</label>
-                    <comment>Text input that are required. Validator checks that this field is not empty</comment>
-                    <validate>validate-no-empty</validate>
+                    <label>Email address</label>
+                    <comment>Text input that are required. Validator checks that this field is a valid email address</comment>
+                    <validate>validate-email</validate>
                 </field>
 
                 <field id="textarea_example" translate="label" type="textarea" sortOrder="25" showInDefault="1" showInWebsite="1" showInStore="0">
                     <label>Textarea example</label>
+                    <comment>Try the textarea in the next section instead. That text area will write in this text area when you save.</comment>
                 </field>
 
                 <field id="password" translate="label comment" type="password" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="0">
@@ -150,11 +151,24 @@
                 <label>Another group</label>
                 <comment>More settings here</comment>
 
-                <field id="enabled" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="0">
-                    <label>Enable</label>
-                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-                    <comment>Type: select. Shows a select type with a yes/no data source.</comment>
+                <field id="textarea_example" translate="label" type="textarea" sortOrder="25" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Textarea example</label>
+                    <config_path>charzam_config/settings/textarea_example</config_path>
+                    <comment>Config path. You can write something here and it will be saved in the text area in the previous section. Set any config path you want but be aware of using the right data type.</comment>
                 </field>
+
+                <field id="allowspecific" translate="label" type="allowspecific" sortOrder="170" showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">
+                    <label>Payment from Applicable Countries</label>
+                    <source_model>Magento\Payment\Model\Config\Source\Allspecificcountries</source_model>
+                    <comment>This type is allowspecific</comment>
+                </field>
+
+                <field id="specificcountry" translate="label" type="multiselect" sortOrder="180" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Payment from Specific Countries</label>
+                    <source_model>Magento\Directory\Model\Config\Source\Country</source_model>
+                    <comment>This is a multi select from a data source. Hold down CTRL when you click.</comment>
+                </field>
+
             </group>
 
         </section>

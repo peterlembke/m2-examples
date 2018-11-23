@@ -32,8 +32,8 @@
     <default>
         <improove_config>
             <general>
-                <module_documentation>https://improove.atlassian.net/wiki/spaces/MF/pages/554631169/Improove+CategoryNewsFromDate</module_documentation>
-                <module_repository>https://github.com/improove/magento2-module-improove-category-news-from-date</module_repository>
+                <module_documentation>https://github.com/peterlembke/m2-examples/tree/master/src/magento2/app/code/CharZam/Config</module_documentation>
+                <module_repository>https://github.com/peterlembke/m2-examples</module_repository>
             </general>
             <settings>
                 <enabled>0</enabled>

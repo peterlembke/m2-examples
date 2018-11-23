@@ -72,3 +72,4 @@ Todo
 ----
 POST parameters
 GET parameters
+AJAX calls
