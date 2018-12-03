@@ -35,9 +35,14 @@
             </container>
             <block class="CharZam\Controller\Block\MyPage" name="another-page" template="CharZam_Controller::another-page.phtml">
                 <arguments>
-                    <argument name="triggers" xsi:type="array">
-                        <item name="loginButton" xsi:type="string">.action.login</item>
+                    <argument name="example_string" xsi:type="string">My example string</argument>
+                    <argument name="example_boolean" xsi:type="boolean">true</argument>
+                    <argument name="example_array" xsi:type="array">
+                        <item name="my_item_1" xsi:type="string">My item #1</item>
+                        <item name="my_item_2" xsi:type="string">My item #2</item>
                     </argument>
+                    <argument name="my_data_source" xsi:type="object">Magento\Widget\Model\ResourceModel\Widget\Instance\Collection</argument>
+                    <argument name="my_options" xsi:type="options" model="Magento\Widget\Model\ResourceModel\Widget\Instance\Options\Types"/>
                 </arguments>
             </block>
         </referenceContainer>

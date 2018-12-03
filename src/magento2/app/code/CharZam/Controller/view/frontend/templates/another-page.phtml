@@ -35,5 +35,7 @@
         <p><?= $block->escapeHtml(__('Another test page to show the page result')) ?></p>
         <?php $row = 'foobar'; ?>
         <p><?php echo $row . ' become: ' . $block->convertString($row); ?></p>
+        <p><?php $data = $block->getData(); ?></p>
+        <p><?php var_dump($data); ?></p>
     </div>
 </div>
