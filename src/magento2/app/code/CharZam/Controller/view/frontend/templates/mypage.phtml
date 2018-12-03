@@ -35,7 +35,9 @@
         <p><?= $block->escapeHtml(__('Test page to show the page result')) ?></p>
         <?php $row = 'My Page!!'; ?>
         <p><?php echo $row . ' become: ' . $block->convertString($row); ?></p>
-        <p><?php echo 'Example string: ' . $block->getData('example_string'); ?></p>
-        <p><?php echo 'Example boolean: ' . $block->getData('example_boolean'); ?></p>
+        <?php $data = $block->getMyString(); ?>
+        <p><?php echo 'Example string: ' .  $data; ?></p>
+        <?php $data = $block->getMyBoolean(); ?>
+        <p><?php echo 'Example boolean: ' . $data; ?></p>
     </div>
 </div>

@@ -31,7 +31,12 @@
     <body>
         <referenceContainer name="content">
             <container name="charzam.top.container" label="CharZam Top Container" htmlTag="div" htmlClass="charzam-container">
-                <block class="CharZam\Controller\Block\MyPage" name="mypage" template="CharZam_Controller::mypage.phtml"/>
+                <block class="CharZam\Controller\Block\MyPage" name="mypage" template="CharZam_Controller::mypage.phtml">
+                    <arguments>
+                        <argument name="my_string" xsi:type="string">My string</argument>
+                        <argument name="my_boolean" xsi:type="boolean">true</argument>
+                    </arguments>
+                </block>
             </container>
             <block class="CharZam\Controller\Block\MyPage" name="another-page" template="CharZam_Controller::another-page.phtml">
                 <arguments>
