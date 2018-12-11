@@ -71,9 +71,14 @@ time
 
 Rights (ACL)
 ------------
+Access Control Lists (ACL) is a way to regulate who is seeing what in admin.
+ You set up admin users and admin groups in admin. The groups can get different rights.
+ All features are listed and you can select what the group members should see.
 
 https://www.atwix.com/magento-2/system-configuration/
+ https://www.mageplaza.com/magento-2-module-development/magento-2-acl-access-control-lists.html
 
+If you do not have an etc/acl.xml in your code then only super users can use the feature and you have no possibility to let a group use the feature.
 
 Sensitive data
 --------------
