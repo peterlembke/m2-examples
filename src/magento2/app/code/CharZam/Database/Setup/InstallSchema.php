@@ -151,7 +151,7 @@ class InstallSchema  implements InstallSchemaInterface
      */
     protected function createTable($setup, $tableName = '', $tableFields = array())
     {
-        if($setup->tableExists($tableName) === false) {
+        if ($setup->tableExists($tableName) === true) {
             return;
         }
         $table = $setup->getConnection()->newTable($tableName);
@@ -163,11 +163,14 @@ class InstallSchema  implements InstallSchemaInterface
 
     /**
      * Create all indexes
-     * @param $setup
+     * @param \Magento\Framework\Setup\SchemaSetupInterface $setup
      * @param string $tableName
      * @param array $tableIndexes
      */
     protected function addIndexes($setup, $tableName = '', $tableIndexes = array()) {
+        if ($setup->tableExists($tableName) === false) {
+            return;
+        }
         foreach ($tableIndexes as $tableIndex) {
             $this->addIndex($setup, $tableName, $tableIndex['fields'], $tableIndex['unique']);
         }
@@ -175,7 +178,7 @@ class InstallSchema  implements InstallSchemaInterface
 
     /**
      * Add an index
-     * @param $setup
+     * @param \Magento\Framework\Setup\SchemaSetupInterface $setup
      * @param string $tableName
      * @param array $fields
      * @param bool|false $unique

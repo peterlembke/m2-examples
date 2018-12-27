@@ -34,15 +34,17 @@ class WorkoutSearchCriteria extends \Magento\Framework\Api\SearchCriteria
     protected $filterGroupFactory = null;
     protected $sortOrderFactory = null;
 
-    protected function _construct(
+    public function __construct(
         \Magento\Framework\Api\FilterFactory $filterFactory,
         \Magento\Framework\Api\Search\FilterGroupFactory $filterGroupFactory,
-        \Magento\Framework\Api\SortOrderFactory $sortOrderFactory
+        \Magento\Framework\Api\SortOrderFactory $sortOrderFactory,
+        array $data = []
     )
     {
         $this->filterFactory = $filterFactory;
         $this->filterGroupFactory = $filterGroupFactory;
         $this->sortOrderFactory = $sortOrderFactory;
+        parent::__construct($data);
     }
 
     public function createFilter() {
