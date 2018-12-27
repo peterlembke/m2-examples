@@ -66,56 +66,70 @@ class InstallSchema  implements InstallSchemaInterface
                         'identity' => true,
                         'primary' => true,
                         'nullable' => false
-                    )
+                    ),
+                    'comment' => 'Unique ID'
                 ),
                 'date' => array(
                     'type' => Table::TYPE_DATE,
                     'length' => 0,
                     'flags' => array(
-                        'nullable' => false
-                    )
+                        'nullable' => false,
+                        'default' => '2019-01-01'
+                    ),
+                    'comment' => 'Date for the workout YYYY-MM-DD'
                 ),
                 'time' => array(
                     'type' => Table::TYPE_TEXT,
                     'length' => 8,
                     'flags' => array(
-                        'nullable' => true
-                    )
+                        'nullable' => true,
+                        'default' => '00:00:00'
+                    ),
+                    'comment' => 'The amount of time you worked out HH:MM:SS'
                 ),
                 'distance' => array(
                     'type' => Table::TYPE_INTEGER,
                     'length' => 10,
                     'flags' => array(
-                        'nullable' => true
-                    )
+                        'nullable' => true,
+                        'default' => 0
+                    ),
+                    'comment' => 'The distance in meter.'
                 ),
                 'note' => array(
                     'type' => Table::TYPE_TEXT,
                     'length' => 255,
                     'flags' => array(
                         'nullable' => true
-                    )
+                    ),
+                    'comment' => 'Any note you have about the workout'
                 ),
                 'where' => array(
                     'type' => Table::TYPE_TEXT,
                     'length' => 120,
                     'flags' => array(
-                        'nullable' => true
-                    )
+                        'nullable' => true,
+                        'default' => 'Stockholm, Sweden'
+                    ),
+                    'comment' => 'City, Country'
                 ),
                 'indoor' => array(
                     'type' => Table::TYPE_BOOLEAN,
                     'length' => 1,
                     'flags' => array(
-                        'nullable' => true
-                    )
+                        'nullable' => true,
+                        'default' => 0
+                    ),
+                    'comment' => 'Was the workout indoor?'
                 ),
                 'competition' => array(
                     'type' => Table::TYPE_BOOLEAN,
                     'length' => 1,
                     'flags' => array(
-                        'nullable' => true
-                    )
+                        'nullable' => true,
+                        'default' => 0
+                    ),
+                    'comment' => 'Was the workout a competition?'
                 ),
             )
         );
@@ -155,8 +169,17 @@ class InstallSchema  implements InstallSchemaInterface
             return;
         }
         $table = $setup->getConnection()->newTable($tableName);
+
+        $default = array(
+            'type' => '',
+            'length' => 0,
+            'flags' => array(),
+            'comment' => ''
+        );
+
         foreach ($tableFields as $fieldName => $fieldData) {
-            $table->addColumn($fieldName, $fieldData['type'], $fieldData['length'], $fieldData['flags']);
+            $fieldData = $this->_Default($default, $fieldData);
+            $table->addColumn($fieldName, $fieldData['type'], $fieldData['length'], $fieldData['flags'], $fieldData['comment']);
         }
         $setup->getConnection()->createTable($table);
     }
@@ -171,7 +194,14 @@ class InstallSchema  implements InstallSchemaInterface
         if ($setup->tableExists($tableName) === false) {
             return;
         }
+
+        $default = array(
+            'unique' => false,
+            'fields' => array()
+        );
+
         foreach ($tableIndexes as $tableIndex) {
+            $tableIndex = $this->_Default($default, $tableIndex);
             $this->addIndex($setup, $tableName, $tableIndex['fields'], $tableIndex['unique']);
         }
     }
@@ -194,4 +224,45 @@ class InstallSchema  implements InstallSchemaInterface
         $setup->getConnection()->addIndex($tableName, $indexName, $fields, $indexType, $schemaName = null);
     }
 
+    /**
+     * Make sure you get all variables you expect, at least with default values, and the right data type.
+     * Used by: EVERY function.
+     * The $default variables, You can only use: array, string, integer, float, null
+     * The $in variables, You can only use: array, string, integer, float
+     * @example: $in = _Default($default,$in);
+     * @version 2016-01-25
+     * @since   2013-09-05
+     * @author  Peter Lembke
+     * @param $default
+     * @param $in
+     * @return array
+     */
+    final protected function _Default(array $default = array(), array $in = array())
+    {
+        // On this level: Remove all variables that are not in default. Add all variables that are only in default.
+        $answer = array_intersect_key(array_merge($default, $in), $default);
+
+        // Check the data types
+        foreach ($default as $key => $data) {
+            if (gettype($answer[$key]) !== gettype($default[$key])) {
+                if (is_null($default[$key]) === false) {
+                    $answer[$key] = $default[$key];
+                }
+                continue;
+            }
+            if (is_null($default[$key]) === true and is_null($answer[$key]) === true) {
+                $answer[$key] = '';
+                continue;
+            }
+            if (is_array($default[$key]) === false) {
+                continue;
+            }
+            if (count($default[$key]) === 0) {
+                continue;
+            }
+            $answer[$key] = $this->_Default($default[$key], $answer[$key]);
+        }
+
+        return $answer;
+    }
 }
