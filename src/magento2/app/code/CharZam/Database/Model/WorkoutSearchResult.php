@@ -42,6 +42,7 @@ class WorkoutSearchResult extends \Magento\Framework\Model\AbstractModel impleme
     }
 
     /**
+     * Gives you the collection. Now you can use an iterator on the collection
      * @return Collection
      */
     public function getCollection() {
@@ -58,17 +59,22 @@ class WorkoutSearchResult extends \Magento\Framework\Model\AbstractModel impleme
     }
 
     /**
-     * Get items list.
-     *
+     * Get items list as an array.
+     * If you really need an array of the collection (that should never happen)
+     * This is a dumb function I had to implement because it is in the interface.
+     * It destroys the lazy loading of the collection.
      * @return \Magento\Framework\Api\ExtensibleDataInterface[]
      */
     public function getItems() {
+        if (empty($this->_collection) === true) {
+            return array();
+        }
         return $this->_collection->getItems();
     }
 
     /**
      * Set items list.
-     *
+     * A dumb function I had to implement. See the other dumb function setTotalCount().
      * @param \Magento\Framework\Api\ExtensibleDataInterface[] $items
      * @return $this
      */
@@ -98,16 +104,21 @@ class WorkoutSearchResult extends \Magento\Framework\Model\AbstractModel impleme
 
     /**
      * Get total count.
-     *
+     * Also destroys the lazy loading on the collection. Use only if you really need it.
      * @return int
      */
     public function getTotalCount() {
+        if (empty($this->_collection) === true) {
+            return 0;
+        }
         return $this->_collection->getSize();
     }
 
     /**
      * Set total count.
-     *
+     * A dumb function I have to implement because the interface I extend has it.
+     * Dumb because you are supposed to use it like $blabla->setTotalCount($collection->getSize());
+     * As soon as you do that you also destroy the lazy loading of the collection. That is dumb.
      * @param int $totalCount
      * @return $this
      */

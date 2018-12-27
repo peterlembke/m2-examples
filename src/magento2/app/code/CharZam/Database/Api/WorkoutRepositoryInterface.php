@@ -75,8 +75,24 @@ interface WorkoutRepositoryInterface
     public function deleteAll();
 
     /**
-     * @param string $date
+     * Search with a direct SQL query. This is the no way. But I use it sometimes to save time.
+     * @param int $distance
      * @return mixed
      */
-    public function getCollectionByDate($date = '');
+    public function getItemsArrayByDistanceAndCompetition($distance = 0);
+
+    /**
+     * Search with the old collection methods. Inherited from Magento 1.
+     * @param int $distance
+     * @return mixed
+     */
+    public function getCollectionByDistanceAndCompetition($distance = 0);
+
+    /**
+     * Search with the new searchCriteria methods. Magento 2 way.
+     * @param int $distance
+     * @return mixed
+     */
+    public function getSearchResultByDistanceAndCompetition($distance = 0);
+
 }

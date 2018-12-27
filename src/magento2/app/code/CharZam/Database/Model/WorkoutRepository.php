@@ -30,7 +30,6 @@ namespace CharZam\Database\Model;
 
 use CharZam\Database\Api\Data\WorkoutInterface;
 use CharZam\Database\Api\WorkoutRepositoryInterface;
-use Magento\Framework\Api\SearchCriteriaInterface;
 
 use Magento\Framework\Exception\CouldNotSaveException;
 use Magento\Framework\Exception\NoSuchEntityException;
@@ -39,6 +38,8 @@ use Magento\Framework\Exception\InputException;
 
 use Magento\Framework\Api\SearchCriteria\CollectionProcessorInterface;
 use CharZam\Database\Api\Data\WorkoutSearchResultInterfaceFactory as SearchResultFactory;
+use CharZam\Database\Model\WorkoutSearchCriteriaFactory;
+use \Magento\Framework\Api\SearchCriteriaInterface;
 
 
 class WorkoutRepository implements WorkoutRepositoryInterface
@@ -58,10 +59,14 @@ class WorkoutRepository implements WorkoutRepositoryInterface
      */
     protected $collectionFactory;
 
+    protected $resourceConnection;
+
     /**
      * @var SearchResultFactory
      */
     protected $searchResultFactory = null;
+
+    protected $searchCriteriaFactory = null;
 
     /**
      * @var \Magento\Framework\Api\ExtensionAttribute\JoinProcessorInterface
@@ -84,7 +89,9 @@ class WorkoutRepository implements WorkoutRepositoryInterface
         \CharZam\Database\Model\WorkoutFactory $workoutFactory,
         \CharZam\Database\Model\ResourceModel\Workout $resource,
         \CharZam\Database\Model\ResourceModel\Workout\CollectionFactory $collectionFactory,
+        \Magento\Framework\App\ResourceConnection $resourceConnection,
         SearchResultFactory $searchResultFactory,
+        WorkoutSearchCriteriaFactory $workoutSearchCriteriaFactory,
         \Magento\Framework\Api\ExtensionAttribute\JoinProcessorInterface $extensionAttributesJoinProcessor,
         CollectionProcessorInterface $collectionProcessor = null
     ) {
@@ -92,7 +99,10 @@ class WorkoutRepository implements WorkoutRepositoryInterface
         $this->resource = $resource;
         $this->collectionFactory = $collectionFactory;
 
+        $this->resourceConnection = $resourceConnection;
+
         $this->searchResultFactory = $searchResultFactory;
+        $this->searchCriteriaFactory = $workoutSearchCriteriaFactory;
         $this->extensionAttributesJoinProcessor = $extensionAttributesJoinProcessor;
         $this->collectionProcessor = $collectionProcessor;
     }
@@ -105,6 +115,16 @@ class WorkoutRepository implements WorkoutRepositoryInterface
     {
         $workout = $this->workoutFactory->create();
         return $workout;
+    }
+
+    /**
+     * Create a new empty searchCriteria object
+     * @return \CharZam\Database\Model\WorkoutSearchCriteria
+     */
+    public function createSearchCriteria()
+    {
+        $searchCriteria = $this->searchCriteriaFactory->create();
+        return $searchCriteria;
     }
 
     /**
@@ -219,21 +239,122 @@ class WorkoutRepository implements WorkoutRepositoryInterface
     }
 
     /**
-     * Get all workouts for a specific date
-     * @param string $date
-     * @return \CharZam\Database\Api\Data\WorkoutInterface[]
+     * Get all workouts for a specific distance that are marked as competition = true
+     * I do not like using trow new but that is how Magento 2 is built.
+     * Using a direct SQL query to get the result.
+     * This is discouraged. I use this sometimes for saving development time and execution time.
+     * @param integer $distance
+     * @return array
      * @throws InputException
      */
-    public function getCollectionByDate($date = '')
+    public function getItemsArrayByDistanceAndCompetition($distance = 0)
     {
-        if (!$date) {
-            throw new InputException(__('Date required'));
+        if (!$distance) {
+            throw new InputException(__('Distance in meter required'));
         }
 
+        $sql = 'select * from charzam_database_workout where distance=' . (int) $distance . ' and competition=true order by date asc';
+        $result = $this->sqlRead($sql);
+        return $result;
+    }
+
+    /**
+     * Get all workouts for a specific distance that are marked as competition = true
+     * I do not like using trow new but that is how Magento 2 is built.
+     * The collection code is inherited from Magento 1.
+     * @param integer $distance
+     * @return \CharZam\Database\Model\ResourceModel\Workout\Collection
+     * @throws InputException
+     */
+    public function getCollectionByDistanceAndCompetition($distance = 0)
+    {
+        if (!$distance) {
+            throw new InputException(__('Distance in meter required'));
+        }
+
+        /** @var \CharZam\Database\Model\ResourceModel\Workout\Collection $collection */
         $collection = $this->collectionFactory->create();
-        $collection->addFieldToFilter('date', $date);
+        $collection->addFieldToFilter('distance', $distance);
+        $collection->addFieldToFilter('competition', true);
+        $collection->addOrder('date', \CharZam\Database\Model\ResourceModel\Workout\Collection::SORT_ORDER_ASC);
         // Use addFieldToFilter when it is a table field
         // Use addAttributeToFilter when it is an EAV attribute
         return $collection;
     }
+
+    /**
+     * Get all workouts for a specific distance that are marked as competition = true
+     * I do not like using trow new but that is how Magento 2 is built.
+     * This is the new Magento 2 way of searching. You get the same data as with the other two functions above.
+     * https://devdocs.magento.com/guides/v2.2/extension-dev-guide/searching-with-repositories.html
+     * @param integer $distance
+     * @return \CharZam\Database\Api\Data\WorkoutSearchResultInterface
+     * @throws InputException
+     */
+    public function getSearchResultByDistanceAndCompetition($distance = 0)
+    {
+        if (!$distance) {
+            throw new InputException(__('Distance in meter required'));
+        }
+
+        $searchCriteria = $this->createSearchCriteria();
+
+        /** @var \Magento\Framework\Api\Filter $distanceFilter */
+        $distanceFilter = $searchCriteria->createFilter();
+
+        /** @var \Magento\Framework\Api\Search\FilterGroup $distanceFilterGroup */
+        $distanceFilterGroup = $searchCriteria->createFilterGroup();
+
+        /** @var \Magento\Framework\Api\Filter $competitionFilter */
+        $competitionFilter = $searchCriteria->createFilter();
+
+        /** @var \Magento\Framework\Api\Search\FilterGroup $competitionFilterGroup */
+        $competitionFilterGroup = $searchCriteria->createFilterGroup();
+
+        $distanceFilter->setField('distance')->setValue($distance)->setConditionType('eq');
+        $distanceFilterGroup->setFilters(array($distanceFilter));
+
+        $competitionFilter->setField('competition')->setValue(true)->setConditionType('eq');
+        $competitionFilterGroup->setFilters(array($competitionFilter));
+
+        $searchCriteria->setFilterGroups(array($distanceFilterGroup, $competitionFilterGroup));
+
+        /** @var \Magento\Framework\Api\SortOrder $sortOrderDateAscending */
+        $sortOrderDateAscending = $searchCriteria->createSortOrder();
+        $sortOrderDateAscending->setField('date')->setDirection(\Magento\Framework\Api\SortOrder::SORT_ASC);
+
+        $searchCriteria->setSortOrders(array($sortOrderDateAscending));
+
+        /** @var \CharZam\Database\Api\Data\WorkoutSearchResultInterface $searchResult */
+        $searchResult = $this->getList($searchCriteria);
+
+        return $searchResult;
+    }
+
+    /**
+     * Direct SQL query read.
+     * We should not use SQL, there are almost always another solution,
+     * But sometimes a one line SQL query is both quick and saves time.
+     * @param string $sql
+     * @return array
+     */
+    protected function sqlRead($sql = '') {
+        $connection = $this->resourceConnection->getConnection();
+        $data = $connection->fetchAll($sql);
+        return $data;
+    }
+
+    /**
+     * Direct SQL query write.
+     * We should not use SQL, there are almost always another solution,
+     * But sometimes a one line SQL query is both quick and saves time.
+     * @param string $sql
+     * @return array
+     */
+    protected function sqlWrite($sql = '') {
+        $connection = $this->resourceConnection->getConnection();
+        $data = $connection->query($sql);
+        return $data;
+    }
+
 }

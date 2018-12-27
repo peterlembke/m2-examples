@@ -4,29 +4,15 @@
         <arguments>
             <argument name="commands" xsi:type="array">
                 <item name="charzam_database_installed" xsi:type="object">CharZam\Database\Command\Installed</item>
-                <item name="charzam_database_run" xsi:type="object">CharZam\Database\Command\Run</item>
+                <item name="charzam_database_set" xsi:type="object">CharZam\Database\Command\Set</item>
+                <item name="charzam_database_get" xsi:type="object">CharZam\Database\Command\Get</item>
+                <item name="charzam_database_search" xsi:type="object">CharZam\Database\Command\Search</item>
             </argument>
         </arguments>
     </type>
 
-    <preference for="CharZam\Database\Api\Class1Interface" type="CharZam\Database\Model\Class1"/>
-
-    <type name="CharZam\Database\Model\Class1">
-        <plugin name="charzam_database_plugin_model_class1"
-                type="CharZam\Database\Plugin\Model\Class1"
-                sortOrder="10"
-                disabled="false"/>
-        <plugin name="charzam_database_plugin_model_class1again"
-                type="CharZam\Database\Plugin\Model\Class1Again"
-                sortOrder="20"
-                disabled="false"/>
-    </type>
-
-    <type name="CharZam\Database\Api\Class1Interface">
-        <plugin name="charzam_database_plugin_model_class1Interface"
-                type="CharZam\Database\Plugin\Model\Class1Again"
-                sortOrder="5"
-                disabled="false"/>
-    </type>
+    <preference for="CharZam\Database\Api\WorkoutRepositoryInterface" type="CharZam\Database\Model\WorkoutRepository"/>
+    <preference for="CharZam\Database\Api\Data\WorkoutInterface" type="CharZam\Database\Model\Workout"/>
+    <preference for="CharZam\Database\Api\Data\WorkoutSearchResultInterface" type="CharZam\Database\Model\WorkoutSearchResult"/>
 
 </config>

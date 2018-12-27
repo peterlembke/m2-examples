@@ -92,4 +92,56 @@ class Workout extends \Magento\Framework\Model\AbstractModel implements WorkoutI
     public function setCompetition($competition = false) {
         return $this->setData('competition', $competition);
     }
+
+    /**
+     * Calculates the speed meter/second
+     * @return float
+     */
+    public function getSpeedms() {
+        $meter = $this->getDistance();
+        $time = $this->getTime();
+        $seconds = $this->timeToSeconds($time);
+        $speedms = $meter / $seconds;
+        return $speedms;
+    }
+
+    /**
+     * Calculates the speed Km/h
+     * @return float
+     */
+    public function getSpeedKmh() {
+        $speedms = $this->getSpeedms();
+        $kmh = $speedms * 3.6;
+        return $kmh;
+    }
+
+    /**
+     * Calculates the speed min/Km
+     * @return string
+     */
+    public function getSpeedMinKm() {
+        $speedms = $this->getSpeedms();
+        $seconds = 1000.0 / $speedms;
+        $minutes = (int) $seconds / 60.0;
+        $secondsLeft = $seconds - $minutes * 60;
+        $secondsLeft = str_pad($secondsLeft, $digits = 2, $padding = '0', STR_PAD_LEFT);
+        $row = $minutes . ':' . $secondsLeft;
+        return $row;
+    }
+
+    /**
+     * Convert a time in format HH:MM:SS, MM:SS, M:SS to seconds
+     * @source https://stackoverflow.com/questions/4834202/convert-time-in-hhmmss-format-to-seconds-only
+     * @param string $time
+     * @return mixed
+     */
+    protected function timeToSeconds($time = '') {
+        sscanf($time, "%d:%d:%d", $hours, $minutes, $seconds);
+        if (isset($seconds) === true) {
+            $result = $hours * 3600 + $minutes * 60 + $seconds;
+        } else {
+            $result = $hours * 60 + $minutes;
+        }
+        return $result;
+    }
 }

@@ -5,6 +5,31 @@ Example module that show how you can use resource models to store data in a tabl
 A setup script that create a new table "charzam_database_workout"
  A resource model that handle the table.
  A command so you can set/get values from the table.
+ A command so you can search in the database and see results
+
+Setup the table
+---------------
+The file Setup/InstallSchema.php creates the 
+
+Model and Resource model
+------------------------
+I have created a model that represent one item (row) in the table. Workout.
+ And a repository that handle load and save of one row. WorkoutRepository.
+ The repository also use the resourceModel and the resourceModel Collection to get access to the table.
+
+Search
+------
+In the WorkoutRepository you have the function getList. It wants a SearchCriteria and will give you a SearchResult.
+
+I have provided three different ways to do a query.
+ Direct SQL should not be used but sometimes that is the only sane alternative.
+ Using a collection is the smoothest way. This is how it was done in Magento 1. M2 can do this too.
+ Using a searchCriteria is how it is supposed to be done in Magento 2.
+ 
+You probably notice the ridiculous amount of code needed for using the getList() function.  
+
+Read more there how to search with repositories.
+https://devdocs.magento.com/guides/v2.2/extension-dev-guide/searching-with-repositories.html
 
 Run example
 -----------
@@ -12,41 +37,5 @@ You start the example from the magento command
 ```magento charzam:database:set keyname value```
 and then
 ```magento charzam:database:get keyname```
-
-How does it work?
------------------
-
-Define the database in di.xml
-----------------------------
-Check the di.xml file in this module and you see how the database are defined.
-
-```
-    <preference for="CharZam\Database\Api\Class1Interface" type="CharZam\Database\Model\Class1"/>
-
-    <type name="CharZam\Database\Model\Class1">
-        <plugin name="charzam_database_plugin_model_class1"
-                type="CharZam\Database\Plugin\Model\Class1"
-                sortOrder="10"
-                disabled="false"/>
-        <plugin name="charzam_database_plugin_model_class1again"
-                type="CharZam\Database\Plugin\Model\Class1Again"
-                sortOrder="20"
-                disabled="false"/>
-    </type>
-
-    <type name="CharZam\Database\Api\Class1Interface">
-        <plugin name="charzam_database_plugin_model_class1Interface"
-                type="CharZam\Database\Plugin\Model\Class1Again"
-                sortOrder="5"
-                disabled="false"/>
-    </type>
-```
-
-You can put database on classes or interfaces.
-
-In this example we have three database on the same class "Class1".
-
-Why a plugin on the interface class?
-------------------------------------
-If the preference in di.xml are changed to another class than Class1 then the two database that go directly to Class1 will no longer work.
-The plugin that point to the Interface will still work. 
+You can also search.
+```magento charzam:database:search 42195```
