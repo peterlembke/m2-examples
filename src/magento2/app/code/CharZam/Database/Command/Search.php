@@ -61,7 +61,7 @@ class Search extends Command
     protected function configure()
     {
         $this->setName('charzam:database:search');
-        $this->setDescription('Set a value in our resource model');
+        $this->setDescription('Search for workouts by distance');
         parent::configure();
     }
 

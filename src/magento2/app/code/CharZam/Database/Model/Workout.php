@@ -77,7 +77,7 @@ class Workout extends \Magento\Framework\Model\AbstractModel implements WorkoutI
         return $this->setData('where', $where);
     }
 
-    public function getIndoor(): boolean {
+    public function getIndoor(): bool {
         return $this->getData('indoor');
     }
 
@@ -85,7 +85,7 @@ class Workout extends \Magento\Framework\Model\AbstractModel implements WorkoutI
         return $this->setData('indoor', $indoor);
     }
 
-    public function getCompetition(): boolean {
+    public function getCompetition(): bool {
         return $this->getData('competition');
     }
 
@@ -97,7 +97,7 @@ class Workout extends \Magento\Framework\Model\AbstractModel implements WorkoutI
      * Calculates the speed meter/second
      * @return float
      */
-    public function getSpeedms() {
+    public function getSpeedms(): float {
         $meter = $this->getDistance();
         $time = $this->getTime();
         $seconds = $this->timeToSeconds($time);
@@ -109,7 +109,7 @@ class Workout extends \Magento\Framework\Model\AbstractModel implements WorkoutI
      * Calculates the speed Km/h
      * @return float
      */
-    public function getSpeedKmh() {
+    public function getSpeedKmh(): float {
         $speedms = $this->getSpeedms();
         $kmh = $speedms * 3.6;
         return $kmh;
@@ -119,7 +119,7 @@ class Workout extends \Magento\Framework\Model\AbstractModel implements WorkoutI
      * Calculates the speed min/Km
      * @return string
      */
-    public function getSpeedMinKm() {
+    public function getSpeedMinKm(): string {
         $speedms = $this->getSpeedms();
         $seconds = 1000.0 / $speedms;
         $minutes = (int) $seconds / 60.0;
@@ -135,7 +135,7 @@ class Workout extends \Magento\Framework\Model\AbstractModel implements WorkoutI
      * @param string $time
      * @return mixed
      */
-    protected function timeToSeconds($time = '') {
+    protected function timeToSeconds($time = ''): int {
         sscanf($time, "%d:%d:%d", $hours, $minutes, $seconds);
         if (isset($seconds) === true) {
             $result = $hours * 3600 + $minutes * 60 + $seconds;

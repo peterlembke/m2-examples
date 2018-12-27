@@ -31,88 +31,146 @@ namespace CharZam\Database\Setup;
 use Magento\Framework\Setup\InstallSchemaInterface;
 use Magento\Framework\Setup\ModuleContextInterface;
 use Magento\Framework\Setup\SchemaSetupInterface;
+use \Magento\Framework\DB\Ddl\Table;
+use \CharZam\Database\Model\ResourceModel\Workout;
+
 
 class InstallSchema  implements InstallSchemaInterface
 {
-    public function install(\Magento\Framework\Setup\SchemaSetupInterface $setup, \Magento\Framework\Setup\ModuleContextInterface $context): void
+    public function install(SchemaSetupInterface $setup, ModuleContextInterface $context): void
     {
         $setup->startSetup();
-        $tableName = \CharZam\Database\Model\ResourceModel\Workout::TABLE_NAME;
-        if(!$setup->tableExists($tableName)) {
-            $table = $setup->getConnection()->newTable($tableName);
-            $table
-                ->addColumn(
-                    'id',
-                    Table::TYPE_INTEGER,
-                    11,
-                    [
+
+        $tables = array(
+            Workout::TABLE_NAME
+        );
+
+        foreach ($tables as $tableName) {
+            $tableFields = $this->getTableFields($tableName);
+            $this->createTable($setup, $tableName, $tableFields);
+            $tableIndexes = $this->getTableIndexes($tableName);
+            $this->addIndexes($setup, $tableName, $tableIndexes);
+        }
+
+        $setup->endSetup();
+    }
+
+    protected function getTableFields($tableName) {
+        $data = array(
+            Workout::TABLE_NAME => array(
+                'entity_id' => array(
+                    'type' => Table::TYPE_INTEGER,
+                    'length' => 11,
+                    'flags' => array(
                         'unsigned' => true,
                         'identity' => true,
                         'primary' => true,
                         'nullable' => false
-                    ]
-                )
-                ->addColumn(
-                    'material',
-                    Table::TYPE_TEXT,
-                    255,
-                    [
+                    )
+                ),
+                'date' => array(
+                    'type' => Table::TYPE_DATE,
+                    'length' => 0,
+                    'flags' => array(
+                        'nullable' => false
+                    )
+                ),
+                'time' => array(
+                    'type' => Table::TYPE_TEXT,
+                    'length' => 8,
+                    'flags' => array(
                         'nullable' => true
-                    ]
-                )
-                ->addColumn(
-                    'plant',
-                    Table::TYPE_TEXT,
-                    255,
-                    [
+                    )
+                ),
+                'distance' => array(
+                    'type' => Table::TYPE_INTEGER,
+                    'length' => 10,
+                    'flags' => array(
                         'nullable' => true
-                    ]
-                )
-                ->addColumn(
-                    'po',
-                    Table::TYPE_TEXT,
-                    255,
-                    [
+                    )
+                ),
+                'note' => array(
+                    'type' => Table::TYPE_TEXT,
+                    'length' => 255,
+                    'flags' => array(
                         'nullable' => true
-                    ]
-                )
-                ->addColumn(
-                    'item_number',
-                    Table::TYPE_TEXT,
-                    255,
-                    [
+                    )
+                ),
+                'where' => array(
+                    'type' => Table::TYPE_TEXT,
+                    'length' => 120,
+                    'flags' => array(
                         'nullable' => true
-                    ]
-                )
-                ->addColumn(
-                    'release_date',
-                    Table::TYPE_DATE,
-                    null,
-                    [
+                    )
+                ),
+                'indoor' => array(
+                    'type' => Table::TYPE_BOOLEAN,
+                    'length' => 1,
+                    'flags' => array(
                         'nullable' => true
-                    ]
-                )
-                ->addColumn(
-                    'planned_del_date',
-                    Table::TYPE_DATE,
-                    null,
-                    [
+                    )
+                ),
+                'competition' => array(
+                    'type' => Table::TYPE_BOOLEAN,
+                    'length' => 1,
+                    'flags' => array(
                         'nullable' => true
-                    ]
-                )
-                ->addColumn(
-                    'open_qty',
-                    Table::TYPE_INTEGER,
-                    11,
-                    [
-                        'nullable' => true
-                    ]
-                )
-            ;
-            $setup->getConnection()->createTable($table);
+                    )
+                ),
+            )
+        );
+        if (isset($data[$tableName]) === true) {
+            return $data[$tableName];
         }
+        return array();
+    }
 
-        $setup->endSetup();
+    protected function getTableIndexes($tableName = '') {
+        $data = array(
+            Workout::TABLE_NAME => array(
+                'date' => array('unique' => false, 'fields' => array('date')),
+                'time' => array('unique' => false, 'fields' => array('time')),
+                'distance' => array('unique' => false, 'fields' => array('distance')),
+                'note' => array('unique' => false, 'fields' => array('note')),
+                'where' => array('unique' => false, 'fields' => array('where')),
+                'indoor' => array('unique' => false, 'fields' => array('indoor')),
+                'competition' => array('unique' => false, 'fields' => array('competition'))
+            )
+        );
+        if (isset($data[$tableName]) === true) {
+            return $data[$tableName];
+        }
+        return array();
+    }
+
+    /**
+     * Create a table
+     * @param \Magento\Framework\Setup\SchemaSetupInterface $setup
+     * @param string $tableName
+     * @param array $tableFields
+     */
+    protected function createTable($setup, $tableName = '', $tableFields = array())
+    {
+        if($setup->tableExists($tableName) === false) {
+            return;
+        }
+        $table = $setup->getConnection()->newTable($tableName);
+        foreach ($tableFields as $fieldName => $fieldData) {
+            $table->addColumn($fieldName, $fieldData['type'], $fieldData['length'], $fieldData['flags']);
+        }
+        $setup->getConnection()->createTable($table);
+    }
+
+    /**
+     * Create all indexes
+     * @param $setup
+     * @param string $tableName
+     * @param array $tableIndexes
+     */
+    protected function addIndexes($setup, $tableName = '', $tableIndexes = array()) {
+        foreach ($tableIndexes as $tableIndex) {
+            $this->addIndex($setup, $tableName, $tableIndex['fields'], $tableIndex['unique']);
+        }
     }
 
     /**

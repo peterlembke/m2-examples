@@ -48,9 +48,9 @@ interface WorkoutInterface extends \Magento\Framework\Api\ExtensibleDataInterfac
     public function getWhere(): string;
     public function setWhere($where = '');
 
-    public function getIndoor(): boolean;
+    public function getIndoor(): bool;
     public function setIndoor($indoor = false);
 
-    public function getCompetition(): boolean;
+    public function getCompetition(): bool;
     public function setCompetition($competition = false);
 }
