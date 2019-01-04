@@ -52,10 +52,13 @@ Controller
 ----------
 React on the URLs with controllers. In this example you learn how to redirect or forward a request. How to return a page or a json or a raw response. How to make a no route that catch those URLs that no one else have catched.
 
+https://github.com/peterlembke/m2-examples/tree/master/src/magento2/app/code/CharZam/Controller
+
 Database
 --------
 Store data in a table. How to add data, read, write, delete, search data.
 
+https://github.com/peterlembke/m2-examples/tree/master/src/magento2/app/code/CharZam/Database
 
 # Resources
 Resources how you can study Magento 2 more in depth.
