@@ -1,0 +1,20 @@
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+
+    <type name="Magento\Framework\Console\CommandListInterface">
+        <arguments>
+            <argument name="commands" xsi:type="array">
+                <item name="charzam_database_installed" xsi:type="object">CharZam\Database\Command\Installed</item>
+                <item name="charzam_database_set" xsi:type="object">CharZam\Database\Command\Set</item>
+                <item name="charzam_database_get" xsi:type="object">CharZam\Database\Command\Get</item>
+                <item name="charzam_database_search" xsi:type="object">CharZam\Database\Command\Search</item>
+                <item name="charzam_database_search2" xsi:type="object">CharZam\Database\Command\Search2</item>
+                <item name="charzam_database_data" xsi:type="object">CharZam\Database\Command\Data</item>
+            </argument>
+        </arguments>
+    </type>
+
+    <preference for="CharZam\Database\Api\WorkoutRepositoryInterface" type="CharZam\Database\Model\WorkoutRepository"/>
+    <preference for="CharZam\Database\Api\Data\WorkoutInterface" type="CharZam\Database\Model\Workout"/>
+    <preference for="CharZam\Database\Api\Data\WorkoutSearchResultInterface" type="CharZam\Database\Model\WorkoutSearchResult"/>
+
+</config>
