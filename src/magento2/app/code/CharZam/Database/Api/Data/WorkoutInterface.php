@@ -31,7 +31,7 @@ namespace CharZam\Database\Api\Data;
 /**
  * Work out Interface
  */
-interface WorkoutInterface extends \Magento\Framework\Api\ExtensibleDataInterface
+interface WorkoutInterface
 {
     public function getDate(): string;
     public function setDate($date = '');

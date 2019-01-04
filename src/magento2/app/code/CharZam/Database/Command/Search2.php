@@ -34,15 +34,15 @@ use CharZam\Database\Api\Data\WorkoutInterface;
 use CharZam\Database\Api\WorkoutRepositoryInterface;
 
 /**
- * Class Get
+ * Class Set
  * @package CharZam\Database\Command
- * Get a value from the resource model we created in this module
+ * Set a value in the resource model we created in this module
  * RUN:
- * magento charzam:database:get keyname
+ * magento charzam:database:set keyname value
  * RESULT:
- * Shows whatever value you have stored on that keyname
+ * Shows if it was a success or not
  */
-class Get extends Command
+class Search2 extends Command
 {
     protected $workout;
     protected $workoutRepository;
@@ -60,25 +60,34 @@ class Get extends Command
 
     protected function configure()
     {
-        $this->setName('charzam:database:get');
-        $this->setDescription('Get value from our resource model');
+        $this->setName('charzam:database:search2');
+        $this->setDescription('Search for workouts by distance (using searchCriteriaBuilder)');
         parent::configure();
     }
 
     /**
-     * Example how to load an item when you know the id.
+     * Search for all distance = 42195 and competition = 1, sorted by date ascending
+     * The search function uses the search criteria builder to handle the filters and filter groups.
      * @param InputInterface $input
      * @param OutputInterface $output
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $entityId = 1;
+        /** @var \CharZam\Database\Api\Data\WorkoutSearchResultInterface $searchResult */
+        $searchResult = $this->workoutRepository->getSearchResultByDistanceAndCompetition2($distance = 42195);
 
-        $workout = $this->workoutRepository->loadById($entityId);
+        /** @var \CharZam\Database\Model\ResourceModel\Workout\Collection $collection */
+        $collection = $searchResult->getCollection();
 
-        $data = $workout->getData();
-        $row = $this->makeRow($data);
-        $output->writeln($row);
+        $items = $collection->getItems();
+
+        $output->writeln('Items found:');
+        foreach ($items as $item) {
+            $itemDataArray = $item->getData();
+            $row = $this->makeRow($itemDataArray);
+            $output->writeln($row);
+        }
+        $output->writeln('--DONE');
     }
 
     protected function makeRow(array $in = array()): string
@@ -90,5 +99,4 @@ class Get extends Command
         }
         return $out;
     }
-
 }

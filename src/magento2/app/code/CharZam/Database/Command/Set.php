@@ -65,6 +65,11 @@ class Set extends Command
         parent::configure();
     }
 
+    /**
+     * Example how to update an item when you know the id
+     * @param InputInterface $input
+     * @param OutputInterface $output
+     */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $entityId = 1;

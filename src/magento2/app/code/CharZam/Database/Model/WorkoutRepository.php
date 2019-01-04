@@ -41,7 +41,12 @@ use CharZam\Database\Api\Data\WorkoutSearchResultInterfaceFactory as SearchResul
 use CharZam\Database\Model\WorkoutSearchCriteriaFactory;
 use \Magento\Framework\Api\SearchCriteriaInterface;
 
-
+/**
+ * Saves / loads / deletes and searches for items in the table.
+ * You have four different ways to search. See the functions below.
+ * Class WorkoutRepository
+ * @package CharZam\Database\Model
+ */
 class WorkoutRepository implements WorkoutRepositoryInterface
 {
     /**
@@ -69,14 +74,19 @@ class WorkoutRepository implements WorkoutRepositoryInterface
     protected $searchCriteriaFactory = null;
 
     /**
-     * @var \Magento\Framework\Api\ExtensionAttribute\JoinProcessorInterface
-     */
-    protected $extensionAttributesJoinProcessor;
-
-    /**
      * @var \Magento\Framework\Api\SearchCriteria\CollectionProcessorInterface
      */
     protected $collectionProcessor;
+
+    /**
+     * @var \Magento\Framework\Api\SearchCriteriaBuilder
+     */
+    protected $searchCriteriaBuilder;
+
+    /**
+     * @var \Magento\Framework\Api\SortOrderFactory
+     */
+    protected $sortOrderFactory;
 
     /**
      * @param WorkoutFactory $workoutFactory
@@ -92,8 +102,9 @@ class WorkoutRepository implements WorkoutRepositoryInterface
         \Magento\Framework\App\ResourceConnection $resourceConnection,
         SearchResultFactory $searchResultFactory,
         WorkoutSearchCriteriaFactory $workoutSearchCriteriaFactory,
-        \Magento\Framework\Api\ExtensionAttribute\JoinProcessorInterface $extensionAttributesJoinProcessor,
-        CollectionProcessorInterface $collectionProcessor = null
+        CollectionProcessorInterface $collectionProcessor,
+        \Magento\Framework\Api\SearchCriteriaBuilder $searchCriteriaBuilder,
+        \Magento\Framework\Api\SortOrderFactory $sortOrderFactory
     ) {
         $this->workoutFactory = $workoutFactory;
         $this->resource = $resource;
@@ -103,8 +114,9 @@ class WorkoutRepository implements WorkoutRepositoryInterface
 
         $this->searchResultFactory = $searchResultFactory;
         $this->searchCriteriaFactory = $workoutSearchCriteriaFactory;
-        $this->extensionAttributesJoinProcessor = $extensionAttributesJoinProcessor;
         $this->collectionProcessor = $collectionProcessor;
+        $this->searchCriteriaBuilder = $searchCriteriaBuilder;
+        $this->sortOrderFactory = $sortOrderFactory;
     }
 
     /**
@@ -175,12 +187,7 @@ class WorkoutRepository implements WorkoutRepositoryInterface
     public function getList(SearchCriteriaInterface $searchCriteria)
     {
         $collection = $this->collectionFactory->create();
-
-        $workoutInterfaceClassName = \CharZam\Database\Api\Data\WorkoutInterface::class;
-        $this->extensionAttributesJoinProcessor->process($collection, $workoutInterfaceClassName);
-
         $this->collectionProcessor->process($searchCriteria, $collection);
-
         $searchResults = $this->searchResultFactory->create();
         $searchResults->setSearchCriteria($searchCriteria);
         $searchResults->setCollection($collection);
@@ -297,6 +304,7 @@ class WorkoutRepository implements WorkoutRepositoryInterface
             throw new InputException(__('Distance in meter required'));
         }
 
+        /** @var \CharZam\Database\Model\WorkoutSearchCriteria $searchCriteria */
         $searchCriteria = $this->createSearchCriteria();
 
         /** @var \Magento\Framework\Api\Filter $distanceFilter */
@@ -321,6 +329,43 @@ class WorkoutRepository implements WorkoutRepositoryInterface
 
         /** @var \Magento\Framework\Api\SortOrder $sortOrderDateAscending */
         $sortOrderDateAscending = $searchCriteria->createSortOrder();
+        $sortOrderDateAscending->setField('date')->setDirection(\Magento\Framework\Api\SortOrder::SORT_ASC);
+
+        $searchCriteria->setSortOrders(array($sortOrderDateAscending));
+
+        /** @var \CharZam\Database\Api\Data\WorkoutSearchResultInterface $searchResult */
+        $searchResult = $this->getList($searchCriteria);
+
+        return $searchResult;
+    }
+
+    /**
+     * Get all workouts for a specific distance that are marked as competition = true
+     * This is the new Magento 2 way of searching with the criteria builder.
+     * The criteria builder is a wrapper that handle filters and filter groups.
+     * But it does not handle all you need. It does not help you with the sort order.
+     * https://devdocs.magento.com/guides/v2.2/extension-dev-guide/searching-with-repositories.html
+     * @param integer $distance
+     * @return \CharZam\Database\Api\Data\WorkoutSearchResultInterface
+     * @throws InputException
+     */
+    public function getSearchResultByDistanceAndCompetition2($distance = 0)
+    {
+        if (!$distance) {
+            throw new InputException(__('Distance in meter required'));
+        }
+
+        $this->searchCriteriaBuilder->addFilter('distance', $distance, 'eq');
+        $this->searchCriteriaBuilder->addFilter('competition', true, 'eq');
+
+        /** @var \Magento\Framework\Api\SearchCriteria $searchCriteria */
+        $searchCriteria = $this->searchCriteriaBuilder->create();
+        // Yes a $searchCriteria are returned. The "Builder" in the class name are removed. This is true for all Builder classes.
+
+        // The builder does not help us with the sortOrder. We must declare that separately.
+
+        /** @var \Magento\Framework\Api\SortOrder $sortOrderDateAscending */
+        $sortOrderDateAscending = $this->sortOrderFactory->create();
         $sortOrderDateAscending->setField('date')->setDirection(\Magento\Framework\Api\SortOrder::SORT_ASC);
 
         $searchCriteria->setSortOrders(array($sortOrderDateAscending));

@@ -34,15 +34,15 @@ use CharZam\Database\Api\Data\WorkoutInterface;
 use CharZam\Database\Api\WorkoutRepositoryInterface;
 
 /**
- * Class Get
+ * Class Data
  * @package CharZam\Database\Command
- * Get a value from the resource model we created in this module
+ * Craetes the test data in the table
  * RUN:
- * magento charzam:database:get keyname
+ * magento charzam:database:data
  * RESULT:
- * Shows whatever value you have stored on that keyname
+ * The table charzam_database_workout should get some test data
  */
-class Get extends Command
+class Data extends Command
 {
     protected $workout;
     protected $workoutRepository;
@@ -60,35 +60,47 @@ class Get extends Command
 
     protected function configure()
     {
-        $this->setName('charzam:database:get');
-        $this->setDescription('Get value from our resource model');
+        $this->setName('charzam:database:data');
+        $this->setDescription('Write test data to the table charzam_database_workout');
         parent::configure();
     }
 
     /**
-     * Example how to load an item when you know the id.
+     * Write example data to the table.
      * @param InputInterface $input
      * @param OutputInterface $output
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $entityId = 1;
+        $data = array(
+            array(
+                'date' => '2019-01-04',
+                'time' => '03:55:15',
+                'note' => 'First in db, middle in sorted search'
+            ),
+            array(
+                'date' => '2019-01-03',
+                'time' => '04:15:55',
+                'note' => 'Second in db, first in sorted search'
+            ),
+            array(
+                'date' => '2019-01-05',
+                'time' => '04:05:00',
+                'note' => 'Last in db, last in sorted search'
+            ),
+        );
 
-        $workout = $this->workoutRepository->loadById($entityId);
-
-        $data = $workout->getData();
-        $row = $this->makeRow($data);
-        $output->writeln($row);
-    }
-
-    protected function makeRow(array $in = array()): string
-    {
-        $out = '';
-        foreach ($in as $key => $data) {
-            $row = $key .'="'.$data.'"; ';
-            $out = $out . $row;
+        foreach ($data as $item) {
+            $workout = $this->workoutRepository->create();
+            $workout->setDate($item['date']);
+            $workout->setTime($item['time']);
+            $workout->setNote($item['note']);
+            $workout->setDistance(42195);
+            $workout->setCompetition(true);
+            $this->workoutRepository->save($workout);
         }
-        return $out;
+
+        $output->writeln('--Done');
     }
 
 }

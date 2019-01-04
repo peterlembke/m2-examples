@@ -7,6 +7,8 @@
                 <item name="charzam_database_set" xsi:type="object">CharZam\Database\Command\Set</item>
                 <item name="charzam_database_get" xsi:type="object">CharZam\Database\Command\Get</item>
                 <item name="charzam_database_search" xsi:type="object">CharZam\Database\Command\Search</item>
+                <item name="charzam_database_search2" xsi:type="object">CharZam\Database\Command\Search2</item>
+                <item name="charzam_database_data" xsi:type="object">CharZam\Database\Command\Data</item>
             </argument>
         </arguments>
     </type>

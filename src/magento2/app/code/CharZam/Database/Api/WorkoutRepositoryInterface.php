@@ -95,4 +95,10 @@ interface WorkoutRepositoryInterface
      */
     public function getSearchResultByDistanceAndCompetition($distance = 0);
 
+    /**
+     * Search with the new criteria builder that is a wrapper for the searchCriteria methods. Magento 2 way.
+     * @param int $distance
+     * @return mixed
+     */
+    public function getSearchResultByDistanceAndCompetition2($distance = 0);
 }

@@ -61,10 +61,16 @@ class Search extends Command
     protected function configure()
     {
         $this->setName('charzam:database:search');
-        $this->setDescription('Search for workouts by distance');
+        $this->setDescription('Search for workouts by distance (Using searchCriteria)');
         parent::configure();
     }
 
+    /**
+     * Search for all distance = 42195 and competition = 1, sorted by date ascending
+     * The search function uses the search criteria to handle the filters and filter groups.
+     * @param InputInterface $input
+     * @param OutputInterface $output
+     */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         /** @var \CharZam\Database\Api\Data\WorkoutSearchResultInterface $searchResult */
@@ -75,10 +81,13 @@ class Search extends Command
 
         $items = $collection->getItems();
 
+        $output->writeln('Items found:');
         foreach ($items as $item) {
-            $row = $this->makeRow($item);
+            $itemDataArray = $item->getData();
+            $row = $this->makeRow($itemDataArray);
             $output->writeln($row);
         }
+        $output->writeln('--DONE');
     }
 
     protected function makeRow(array $in = array()): string
