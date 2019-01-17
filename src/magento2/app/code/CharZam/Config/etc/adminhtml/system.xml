@@ -29,9 +29,12 @@
 -->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
     <system>
+        <tab id="charzam" translate="label" sortOrder="400">
+            <label>CharZam</label>
+        </tab>
         <section id="charzam_config" translate="label" type="text" sortOrder="400" showInDefault="1" showInWebsite="1" showInStore="1">
             <label>Config example</label>
-            <tab>CharZam</tab>
+            <tab>charzam</tab>
             <resource>CharZam_Config::charzam_config</resource>
 
             <group id="general" translate="label" type="text" sortOrder="5" showInDefault="1" showInWebsite="1" showInStore="1">

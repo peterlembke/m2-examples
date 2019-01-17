@@ -1,11 +1,10 @@
 <?php
-declare(strict_types=1);
 /**
  * Improove_Module
  *
  * NOTICE OF LICENSE
  *
- * Copyright (C) 2018  Improove
+ * Copyright (C) 2019  Improove
  *
  * Improove_Module is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -22,29 +21,16 @@ declare(strict_types=1);
  *
  * @category    Improove
  * @package     Improove_Module
- * @copyright   Copyright (C) 2018 Improove (http://www.improove.se/)
+ * @copyright   Copyright (C) 2019 Improove (http://www.improove.se/)
  * @license     http://www.gnu.org/licenses/agpl-3.0.html
  * @author      Peter Lembke <peter.lembke@improove.se>
  */
-namespace CharZam\DiExample\Model;
-use CharZam\DiExample\Api\MyObjectInterface;
+namespace CharZam\Controller\Controller;
 
-class MyObject1 implements MyObjectInterface
+class CustomTest extends \Magento\Framework\App\Action\Action
 {
-    protected $startValue;
-
-    /**
-     * @param int $startValue
-     */
-    public function __construct(
-        $startValue = 1
-    ) {
-        $this->startValue = $startValue;
-    }
-
-    public function getStartValue($addThis = 0): int
+    public function execute()
     {
-        return $this->startValue + $addThis;
+        die('CharZam\Controller\Controller\CustomTest');
     }
-
 }

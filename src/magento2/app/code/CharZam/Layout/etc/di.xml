@@ -1,27 +1,27 @@
 <?xml version="1.0"?>
 <!--
 /**
- * CharZam_Controller
+ * CharZam_Layout
  *
  * NOTICE OF LICENSE
  *
  * Copyright (C) 2018  Improove
  *
- * CharZam_Controller is free software: you can redistribute it and/or modify
+ * CharZam_Layout is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
  *
- * CharZam_Controller is distributed in the hope that it will be useful,
+ * CharZam_Layout is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Affero General Public License for more details.
  *
  * You should have received a copy of the GNU Affero General Public License
- * along with CharZam_Controller.  If not, see <http://www.gnu.org/licenses/>.
+ * along with CharZam_Layout.  If not, see <http://www.gnu.org/licenses/>.
  *
  * @category    CharZam
- * @package     CharZam_Controller
+ * @package     CharZam_Layout
  * @copyright   Copyright (C) 2018 Improove (http://www.improove.se/)
  * @license     http://www.gnu.org/licenses/agpl-3.0.html
  * @author      Peter Lembke <peter.lembke@improove.se>
@@ -32,19 +32,8 @@
         <arguments>
             <argument name="handlerClassesList" xsi:type="array">
                 <item name="charzam_controller" xsi:type="array">
-                    <item name="class" xsi:type="string">CharZam\Controller\Controller\NoRouteHandler</item>
+                    <item name="class" xsi:type="string">CharZam\Layout\Controller\NoRouteHandler</item>
                     <item name="sortOrder" xsi:type="string">99</item>
-                </item>
-            </argument>
-        </arguments>
-    </type>
-    <type name="Magento\Framework\App\RouterList">
-        <arguments>
-            <argument name="routerList" xsi:type="array">
-                <item name="charzamcustomrouter" xsi:type="array">
-                    <item name="class" xsi:type="string">CharZam\Controller\Controller\Router</item>
-                    <item name="disable" xsi:type="boolean">false</item>
-                    <item name="sortOrder" xsi:type="string">25</item>
                 </item>
             </argument>
         </arguments>
