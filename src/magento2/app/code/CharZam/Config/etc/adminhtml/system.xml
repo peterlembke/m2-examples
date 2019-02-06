@@ -169,6 +169,12 @@
                     <comment>This is a multi select from a data source. Hold down CTRL when you click.</comment>
                 </field>
 
+                <field id="special_until" translate="label comment" type="text" sortOrder="190" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>My date</label>
+                    <frontend_model>CharZam\Config\Block\DatePicker</frontend_model>
+                    <comment>Pick a date</comment>
+                </field>
+
             </group>
 
         </section>
