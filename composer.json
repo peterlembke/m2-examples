@@ -23,6 +23,7 @@
     }
   ],
   "require": {
+    "php": "~7.1.3||~7.2.0",
     "magento/framework": ">=102.0.0",
     "magento/magento-composer-installer": "*"
   },
@@ -37,9 +38,6 @@
     "charzam/module-layout": "self.version",
     "charzam/module-plugins": "self.version",
     "charzam/module-useproxy": "self.version"
-  },
-  "require-dev": {
-    "peterlembke/m2-examples": "~1.0.0"
   },
   "autoload": {
     "files": [
@@ -66,9 +64,5 @@
       "CharZam\\Plugins\\": "src/magento2/app/code/CharZam/Plugins",
       "CharZam\\UseProxy\\": "src/magento2/app/code/CharZam/UseProxy"
     }
-  },
-  "extra": {
-  },
-  "minimum-stability": "dev",
-  "prefer-stable": true
+  }
 }
