@@ -1,0 +1,74 @@
+{
+  "name": "peterlembke/m2-examples",
+  "type": "magento2-component",
+  "license": [
+    "GPL-3.0+"
+  ],
+  "authors": [
+    {
+      "name": "Peter Lembke",
+      "email": "info@charzam.com"
+    }
+  ],
+  "description": "Magento 2.2 example modules",
+  "homepage": "https://github.com/peterlembke/m2-examples",
+  "keywords": [
+    "magento2", "example", "modules", "example",
+    "di", "plugins", "factory", "proxy", "events", "crontab", "config", "controller", "database"
+  ],
+  "repositories": [
+    {
+      "type": "composer",
+      "url": "https://repo.magento.com/"
+    }
+  ],
+  "require": {
+    "magento/framework": ">=102.0.0",
+    "magento/magento-composer-installer": "*"
+  },
+  "replace": {
+    "charzam/module-config": "self.version",
+    "charzam/module-controller": "self.version",
+    "charzam/module-crontab": "self.version",
+    "charzam/module-database": "self.version",
+    "charzam/module-diexample": "self.version",
+    "charzam/module-events": "self.version",
+    "charzam/module-factory": "self.version",
+    "charzam/module-layout": "self.version",
+    "charzam/module-plugins": "self.version",
+    "charzam/module-useproxy": "self.version"
+  },
+  "require-dev": {
+    "peterlembke/m2-examples": "~1.0.0"
+  },
+  "autoload": {
+    "files": [
+      "src/magento2/app/code/CharZam/Config/registration.php",
+      "src/magento2/app/code/CharZam/Controller/registration.php",
+      "src/magento2/app/code/CharZam/Crontab/registration.php",
+      "src/magento2/app/code/CharZam/Database/registration.php",
+      "src/magento2/app/code/CharZam/DiExample/registration.php",
+      "src/magento2/app/code/CharZam/Events/registration.php",
+      "src/magento2/app/code/CharZam/Factory/registration.php",
+      "src/magento2/app/code/CharZam/Layout/registration.php",
+      "src/magento2/app/code/CharZam/Plugins/registration.php",
+      "src/magento2/app/code/CharZam/UseProxy/registration.php"
+    ],
+    "psr-4": {
+      "CharZam\\Config\\": "src/magento2/app/code/CharZam/Config",
+      "CharZam\\Controller\\": "src/magento2/app/code/CharZam/Controller",
+      "CharZam\\Crontab\\": "src/magento2/app/code/CharZam/Crontab",
+      "CharZam\\Database\\": "src/magento2/app/code/CharZam/Database",
+      "CharZam\\DiExample\\": "src/magento2/app/code/CharZam/DiExample",
+      "CharZam\\Events\\": "src/magento2/app/code/CharZam/Events",
+      "CharZam\\Factory\\": "src/magento2/app/code/CharZam/Factory",
+      "CharZam\\Layout\\": "src/magento2/app/code/CharZam/Layout",
+      "CharZam\\Plugins\\": "src/magento2/app/code/CharZam/Plugins",
+      "CharZam\\UseProxy\\": "src/magento2/app/code/CharZam/UseProxy"
+    }
+  },
+  "extra": {
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true
+}
