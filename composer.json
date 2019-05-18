@@ -1,6 +1,7 @@
 {
   "name": "peterlembke/m2-examples",
-  "type": "magento2-component",
+  "description": "Magento 2.2 example modules",
+  "type": "magento2-module",
   "license": [
     "GPL-3.0+"
   ],
@@ -10,22 +11,13 @@
       "email": "info@charzam.com"
     }
   ],
-  "description": "Magento 2.2 example modules",
   "homepage": "https://github.com/peterlembke/m2-examples",
   "keywords": [
     "magento2", "example", "modules", "example",
     "di", "plugins", "factory", "proxy", "events", "crontab", "config", "controller", "database"
   ],
-  "repositories": [
-    {
-      "type": "composer",
-      "url": "https://repo.magento.com/"
-    }
-  ],
   "require": {
-    "php": "~7.1.3||~7.2.0",
-    "magento/framework": ">=102.0.0",
-    "magento/magento-composer-installer": "*"
+    "php": "~7.1.3||~7.2.0"
   },
   "replace": {
     "charzam/module-config": "self.version",
