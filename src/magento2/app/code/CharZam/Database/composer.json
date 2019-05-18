@@ -1,0 +1,17 @@
+{
+  "name": "charzam/module-crontab",
+  "description": "Example module - learn how to use database resource models",
+  "type": "magento2-module",
+  "license": [
+    "GPL-3.0+"
+  ],
+  "require": {
+    "php": "~7.1.3||~7.2.0"
+  },
+  "autoload": {
+    "files": ["registration.php"],
+    "psr-4": {
+      "CharZam\\Config\\": ""
+    }
+  }
+}

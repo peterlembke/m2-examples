@@ -1,7 +1,7 @@
 {
   "name": "peterlembke/m2-examples",
   "description": "Magento 2.2 example modules",
-  "type": "magento2-module",
+  "type": "magento2-component",
   "license": [
     "GPL-3.0+"
   ],
