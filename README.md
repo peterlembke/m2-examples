@@ -1,5 +1,45 @@
 # m2-examples
 Magento 2.2 example modules to show how things work in M2.2
+ The examples probably also work in M 2.3.
+ 
+# Installation
+You can either download the zip file, or clone the repo or install with composer.
+
+## Install in app/code
+If you prefer to download the code in the zip file then place the files in app/code. If the folder "code" do not exist then create it.
+
+## Install with composer
+In your Magento you have a composer.json, add the repository like this:
+```
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://repo.magento.com/"
+        },
+        {
+            "type": "vcs",
+            "url":  "git@github.com:peterlembke/m2-examples.git"
+        }
+    ],
+```
+And then install like this:
+```
+composer require peterlembke/m2-examples -n
+```
+The modules will be installed in the vendor folder. The paths do not look like other modules and that is just cosmetic. I wanted it to be easy for those that prefer downloading the zip file.
+
+## Enable modules
+You can see that the modules are recognized by Magento like this
+```
+php bin/magento module:status
+```
+and you can enable a module with
+```
+php bin/magento module:enable CharZam_Config
+```
+
+# Module examples
+Here are the examples in this repository
 
 DiExample
 ---------
